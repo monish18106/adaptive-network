@@ -1,0 +1,55 @@
+Final file-by-file checklist
+FILE 1 — dashboard/dashboard_data.py
+
+Do:
+
+✓ import joblib
+✓ add get_pipeline_status()
+✓ add get_model_metadata()
+✓ add get_top_model()
+✓ update get_dashboard_data()
+FILE 2 — dashboard/templates/dashboard.html
+
+Do:
+
+✓ add Automatic Self-Correction Pipeline
+✓ add Top Performing Model
+✓ add Model Metadata
+✓ make anomaly table compact + scrollable
+✓ add CSS
+✓ add loadPipeline()
+✓ add loadTopModel()
+✓ add loadModelMetadata()
+✓ update loadDashboard()
+FILE 3 — automatic_retraining_orchestrator.py
+
+Do:
+
+✓ add automatic_pipeline_status.json path
+✓ add save_pipeline_status()
+✓ write status when ADWIN triggers
+✓ write status while PySpark is running
+✓ write status after PySpark
+✓ write status during evaluation
+✓ write final lifecycle decision
+FILE 4 — app.py
+NO CHANGE.
+
+Your current:
+
+@app.route("/")
+def home():
+    return render_template("dashboard.html")
+
+is correct.
+
+
+Step 1: dashboard_data.py
+Step 2: automatic_retraining_orchestrator.py
+Step 3: pyspark_retraining.py
+Step 4: model_lifecycle.py
+Step 5: dashboard.html
+Step 6: dashboard.js
+Step 7: dashboard.css
+
+ok done next give me full copy pasteable ready file to replace

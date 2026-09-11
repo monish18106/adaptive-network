@@ -1,0 +1,232 @@
+# ==========================================
+# Python
+# ==========================================
+
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+
+# Python packaging
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+
+# ==========================================
+# IDE / Editor
+# ==========================================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+
+# ==========================================
+# Jupyter
+# ==========================================
+
+.ipynb_checkpoints/
+
+# Jupyter temporary files
+*.ipynb_checkpoints
+
+
+# ==========================================
+# Logs
+# ==========================================
+
+logs/
+*.log
+
+
+# ==========================================
+# Kafka / Flink Runtime Files
+# ==========================================
+
+flink/checkpoints/
+flink/jobs/
+
+# Kafka local/runtime data if stored in project
+kafka-logs/
+*.lock
+
+
+# ==========================================
+# Large Dataset Files
+# ==========================================
+
+# Original CICIDS2017 datasets
+data/raw/
+
+# Large processed datasets
+data/processed/*.csv
+
+# Specifically large model datasets
+data/processed/CICIDS2017_Cleaned.csv
+data/processed/model_dataset.csv
+
+# Feature/data dumps
+data/features/
+
+
+# ==========================================
+# Generated Historical Data
+# ==========================================
+
+# Parquet alert history
+data/history/
+
+# Parquet files anywhere
+*.parquet
+
+
+# ==========================================
+# Runtime Pipeline State
+# ==========================================
+
+data/processed/adwin_state.json
+data/processed/automatic_pipeline_status.json
+data/processed/automatic_pipeline_history.json
+data/processed/automatic_retraining_state.json
+data/processed/retraining_status.json
+data/processed/self_correction_state.json
+
+# Runtime reports / generated outputs
+data/processed/adwin_drift_results.csv
+data/processed/phase11_retraining_report.csv
+data/processed/phase12_model_comparison.csv
+data/processed/phase12_model_metadata.json
+data/processed/phase12_promotion_report.csv
+data/processed/pyspark_retraining_report.csv
+
+# Runtime logs
+data/processed/retraining_pipeline.log
+
+
+# ==========================================
+# Machine Learning Model Artifacts
+# ==========================================
+
+# Ignore all generated model files
+models/saved_models/*.pkl
+models/saved_models/*.pth
+models/saved_models/*.pt
+
+# Candidate models
+models/saved_models/candidate_*
+
+# Retrained/intermediate models
+models/saved_models/retrained_*
+
+# Model metadata generated during training
+models/saved_models/*metadata*.json
+
+# Model registry/version files
+models/saved_models/model_registry.json
+models/saved_models/model_version.json
+
+# Production snapshots
+models/saved_models/production/
+
+# Candidate staging
+models/saved_models/candidates/
+
+# Archived models
+models/saved_models/archive/
+
+# Generated evaluation/training artifacts
+models/evaluation/
+models/training/
+
+
+# ==========================================
+# Retraining Artifacts
+# ==========================================
+
+retraining/
+
+
+# ==========================================
+# Additional Generated Storage
+# ==========================================
+
+storage/
+
+
+# ==========================================
+# Temporary / Cache Files
+# ==========================================
+
+*.tmp
+*.temp
+*.bak
+*.cache
+
+.cache/
+tmp/
+temp/
+
+
+# ==========================================
+# OS Generated Files
+# ==========================================
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+.directory
+
+
+# ==========================================
+# Testing / Coverage
+# ==========================================
+
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+
+# ==========================================
+# Flask
+# ==========================================
+
+instance/
+.webassets-cache/
+
+
+# ==========================================
+# Local Configuration
+# ==========================================
+
+# Ignore local-only configuration files
+# Uncomment if these contain machine-specific settings:
+# local_config.py
+# config.local.py

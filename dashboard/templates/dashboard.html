@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Real-Time Network Intrusion Detection
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='dashboard.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+<div class="app-shell">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="topbar">
+
+        <div class="header-content">
+
+            <div class="eyebrow">
+                REAL-TIME SECURITY MONITORING
+            </div>
+
+            <h1>
+                Network Intrusion Detection
+            </h1>
+
+            <p class="subtitle">
+                Stateful stream processing · anomaly detection ·
+                automatic model self-correction
+            </p>
+
+        </div>
+
+
+        <div class="system-indicator">
+
+            <span
+                id="systemDot"
+                class="status-dot online"
+            ></span>
+
+            <div>
+
+                <strong id="systemStatus">
+                    CONNECTING
+                </strong>
+
+                <small id="systemTimestamp">
+                    —
+                </small>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         SYSTEM OVERVIEW
+    ====================================================== -->
+
+    <section class="section-block">
+
+        <div class="section-heading">
+
+            <div>
+
+                <div class="section-kicker">
+                    SYSTEM OVERVIEW
+                </div>
+
+                <h2>
+                    Live Traffic Summary
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="kpi-grid">
+
+
+            <div class="kpi-card">
+
+                <div class="kpi-label">
+                    TOTAL LOGS
+                </div>
+
+                <div
+                    id="totalLogs"
+                    class="kpi-value"
+                >
+                    —
+                </div>
+
+                <div class="kpi-description">
+                    Records received
+                </div>
+
+            </div>
+
+
+            <div class="kpi-card">
+
+                <div class="kpi-label">
+                    PROCESSED
+                </div>
+
+                <div
+                    id="processedLogs"
+                    class="kpi-value"
+                >
+                    —
+                </div>
+
+                <div class="kpi-description">
+                    Stream records processed
+                </div>
+
+            </div>
+
+
+            <div class="kpi-card">
+
+                <div class="kpi-label">
+                    NORMAL
+                </div>
+
+                <div
+                    id="normalLogs"
+                    class="kpi-value"
+                >
+                    —
+                </div>
+
+                <div class="kpi-description">
+                    Normal traffic
+                </div>
+
+            </div>
+
+
+            <div class="kpi-card anomaly-kpi">
+
+                <div class="kpi-label">
+                    ANOMALIES
+                </div>
+
+                <div
+                    id="anomalyCount"
+                    class="kpi-value"
+                >
+                    —
+                </div>
+
+                <div class="kpi-description">
+                    Detected threats
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         SELF-CORRECTION PIPELINE
+    ====================================================== -->
+
+    <section class="panel pipeline-panel">
+
+        <div class="section-header">
+
+            <div>
+
+                <div class="section-kicker">
+                    SELF-CORRECTION PIPELINE
+                </div>
+
+                <h2>
+                    Automatic Model Lifecycle
+                </h2>
+
+            </div>
+
+            <div
+                id="pipelineStatus"
+                class="badge badge-neutral"
+            >
+                WAITING
+            </div>
+
+        </div>
+
+
+        <!-- PIPELINE FLOW -->
+
+        <div class="pipeline-flow">
+
+
+            <div
+                id="stageStream"
+                class="pipeline-stage"
+            >
+
+                <span class="stage-number">
+                    01
+                </span>
+
+                <strong>
+                    STREAM
+                </strong>
+
+                <small>
+                    Kafka + Flink
+                </small>
+
+            </div>
+
+
+            <div class="flow-arrow">
+                →
+            </div>
+
+
+            <div
+                id="stageDrift"
+                class="pipeline-stage"
+            >
+
+                <span class="stage-number">
+                    02
+                </span>
+
+                <strong>
+                    ADWIN
+                </strong>
+
+                <small>
+                    Drift detection
+                </small>
+
+                <div
+                    id="pipelineAdwinStatus"
+                    class="stage-status"
+                >
+                    WAITING
+                </div>
+
+            </div>
+
+
+            <div class="flow-arrow">
+                →
+            </div>
+
+
+            <div
+                id="stageRetrain"
+                class="pipeline-stage"
+            >
+
+                <span class="stage-number">
+                    03
+                </span>
+
+                <strong>
+                    PYSPARK
+                </strong>
+
+                <small>
+                    IF + AE retraining
+                </small>
+
+                <div
+                    id="pipelineRetrainStatus"
+                    class="stage-status"
+                >
+                    WAITING
+                </div>
+
+            </div>
+
+
+            <div class="flow-arrow">
+                →
+            </div>
+
+
+            <div
+                id="stageEvaluation"
+                class="pipeline-stage"
+            >
+
+                <span class="stage-number">
+                    04
+                </span>
+
+                <strong>
+                    EVALUATION
+                </strong>
+
+                <small>
+                    Candidate validation
+                </small>
+
+                <div
+                    id="pipelineEvaluationStatus"
+                    class="stage-status"
+                >
+                    WAITING
+                </div>
+
+            </div>
+
+
+            <div class="flow-arrow">
+                →
+            </div>
+
+
+            <div
+                id="stageLifecycle"
+                class="pipeline-stage"
+            >
+
+                <span class="stage-number">
+                    05
+                </span>
+
+                <strong>
+                    LIFECYCLE
+                </strong>
+
+                <small>
+                    Promote / reject
+                </small>
+
+                <div
+                    id="pipelineLifecycleStatus"
+                    class="stage-status"
+                >
+                    WAITING
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CHECKPOINT SUMMARY -->
+
+        <div class="pipeline-summary-grid">
+
+
+            <div class="summary-box">
+
+                <span>
+                    CURRENT RECORD
+                </span>
+
+                <strong id="pipelineCurrentRecord">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <span>
+                    CHECKPOINT
+                </span>
+
+                <strong id="pipelineCheckpoint">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <span>
+                    NEXT CHECKPOINT
+                </span>
+
+                <strong id="pipelineNextCheckpoint">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <span>
+                    DRIFT COUNT
+                </span>
+
+                <strong id="pipelineDriftCount">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <span>
+                    RETRAINING
+                </span>
+
+                <strong id="pipelineRetrainingStatus">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="summary-box">
+
+                <span>
+                    LIFECYCLE
+                </span>
+
+                <strong id="pipelineLifecycleDecision">
+                    —
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CURRENT PIPELINE MESSAGE -->
+
+        <div
+            id="pipelineMessage"
+            class="pipeline-message"
+        >
+            Waiting for automatic pipeline activity.
+        </div>
+
+
+
+        <!-- BACKEND TERMINAL -->
+
+        <div class="subsection-title">
+            BACKEND PIPELINE ACTIVITY
+        </div>
+
+
+        <div
+            id="pipelineTerminal"
+            class="terminal"
+        >
+
+            <div class="terminal-line">
+
+                <span class="terminal-prefix">
+                    SYSTEM
+                </span>
+
+                Waiting for pipeline activity...
+
+            </div>
+
+        </div>
+
+
+
+        <!-- PIPELINE HISTORY -->
+
+        <div class="subsection-title">
+            PIPELINE EVENT HISTORY
+        </div>
+
+
+        <div
+            id="pipelineHistory"
+            class="pipeline-history"
+        >
+
+            <div class="empty-state">
+                No pipeline events recorded.
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         ADWIN + RETRAINING
+    ====================================================== -->
+
+    <div class="two-column-layout">
+
+
+        <!-- =================================================
+             ADWIN
+        ================================================== -->
+
+        <section class="panel">
+
+            <div class="section-header">
+
+                <div>
+
+                    <div class="section-kicker">
+                        DRIFT DETECTION
+                    </div>
+
+                    <h2>
+                        ADWIN Monitoring
+                    </h2>
+
+                </div>
+
+
+                <div
+                    id="driftBadge"
+                    class="badge badge-neutral"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+            <div class="metric-grid">
+
+
+                <div class="metric-box">
+
+                    <span>
+                        TOTAL DRIFTS
+                    </span>
+
+                    <strong id="totalDrifts">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="metric-box">
+
+                    <span>
+                        NEW DRIFTS
+                    </span>
+
+                    <strong id="newDriftCount">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="metric-box">
+
+                    <span>
+                        LATEST RECORD
+                    </span>
+
+                    <strong id="latestDriftRecord">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="metric-box">
+
+                    <span>
+                        CHECKPOINT
+                    </span>
+
+                    <strong id="driftCheckpoint">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="subsection-title">
+                LATEST DRIFT EVENT
+            </div>
+
+
+            <div
+                id="latestDrift"
+                class="event-detail"
+            >
+                No drift event loaded.
+            </div>
+
+
+
+            <div class="subsection-title">
+                DRIFT HISTORY
+            </div>
+
+
+            <div
+                id="driftHistory"
+                class="drift-history compact-scroll"
+            >
+
+                <div class="empty-state">
+                    No drift events recorded.
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             RETRAINING
+        ================================================== -->
+
+        <section class="panel">
+
+            <div class="section-header">
+
+                <div>
+
+                    <div class="section-kicker">
+                        AUTOMATIC RETRAINING
+                    </div>
+
+                    <h2>
+                        PySpark Retraining
+                    </h2>
+
+                </div>
+
+
+                <div
+                    id="retrainingBadge"
+                    class="badge badge-neutral"
+                >
+                    —
+                </div>
+
+            </div>
+
+
+
+            <div class="training-status-box">
+
+                <span class="summary-label">
+                    CURRENT STATUS
+                </span>
+
+                <strong id="retrainingStatus">
+                    NOT TRIGGERED
+                </strong>
+
+                <small id="retrainingStatusMessage">
+                    Waiting for ADWIN drift trigger.
+                </small>
+
+            </div>
+
+
+
+            <div
+                id="retrainingContainer"
+                class="training-results"
+            >
+
+                <div class="empty-state">
+                    Loading retraining information...
+                </div>
+
+            </div>
+
+
+
+            <div class="subsection-title">
+                RETRAINING HISTORY
+            </div>
+
+
+            <div
+                id="retrainingHistory"
+                class="retraining-history compact-scroll"
+            >
+
+                <div class="empty-state">
+                    No retraining history available.
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         TOP MODEL
+    ====================================================== -->
+
+    <section class="panel top-model-panel">
+
+        <div class="section-header">
+
+            <div>
+
+                <div class="section-kicker">
+                    MODEL PERFORMANCE
+                </div>
+
+                <h2>
+                    Top Performing Model
+                </h2>
+
+            </div>
+
+
+            <div
+                id="topModelBadge"
+                class="badge badge-neutral"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div
+            id="topModelContainer"
+            class="top-model-container"
+        >
+
+            <div class="empty-state">
+                Loading model performance...
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         MODEL METADATA
+    ====================================================== -->
+
+    <section class="panel">
+
+        <div class="section-header">
+
+            <div>
+
+                <div class="section-kicker">
+                    MODEL TRAINING METADATA
+                </div>
+
+                <h2>
+                    Model Metadata
+                </h2>
+
+            </div>
+
+
+            <div class="model-registry-summary">
+
+                <span>
+                    Production
+                </span>
+
+                <strong id="metadataProduction">
+                    —
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="modelMetadataContainer"
+            class="model-grid"
+        >
+
+            <div class="empty-state">
+                Loading model metadata...
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         MODEL VERSION MANAGEMENT
+    ====================================================== -->
+
+    <section class="panel">
+
+        <div class="section-header">
+
+            <div>
+
+                <div class="section-kicker">
+                    MODEL REGISTRY
+                </div>
+
+                <h2>
+                    Model Version Management
+                </h2>
+
+            </div>
+
+
+            <div
+                id="modelDecision"
+                class="badge badge-neutral"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div
+            id="modelsContainer"
+            class="model-version-grid"
+        >
+
+            <div class="empty-state">
+                Loading model history...
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         EVALUATION
+    ====================================================== -->
+
+    <section class="panel">
+
+        <div class="section-header">
+
+            <div>
+
+                <div class="section-kicker">
+                    MODEL SELECTION
+                </div>
+
+                <h2>
+                    Production vs Candidate Evaluation
+                </h2>
+
+            </div>
+
+
+            <div
+                id="evaluationDecision"
+                class="badge badge-neutral"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div
+            id="evaluationContainer"
+            class="evaluation-container"
+        >
+
+            <div class="empty-state">
+                Loading evaluation...
+            </div>
+
+        </div>
+
+
+        <div
+            id="evaluationReason"
+            class="decision-reason"
+        >
+            Waiting for candidate evaluation.
+        </div>
+
+
+        <div class="evaluation-metadata-grid">
+
+
+            <div class="metric-box">
+
+                <span>
+                    EVALUATION RECORDS
+                </span>
+
+                <strong id="evaluationRecords">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="metric-box">
+
+                <span>
+                    F1 TOLERANCE
+                </span>
+
+                <strong id="evaluationF1Tolerance">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="metric-box">
+
+                <span>
+                    FAR TOLERANCE
+                </span>
+
+                <strong id="evaluationFARTolerance">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="metric-box">
+
+                <span>
+                    FUSION THRESHOLD
+                </span>
+
+                <strong id="fusionThreshold">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="metric-box">
+
+                <span>
+                    IF WEIGHT
+                </span>
+
+                <strong id="ifWeight">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="metric-box">
+
+                <span>
+                    AE WEIGHT
+                </span>
+
+                <strong id="aeWeight">
+                    —
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         RECENT ANOMALIES
+    ====================================================== -->
+
+    <section class="panel anomaly-panel">
+
+        <div class="section-header">
+
+            <div>
+
+                <div class="section-kicker">
+                    THREAT MONITORING
+                </div>
+
+                <h2>
+                    Recent Anomalies
+                </h2>
+
+                <div class="section-description">
+                    Latest detections first · older records scroll below
+                </div>
+
+            </div>
+
+
+            <div class="anomaly-header-right">
+
+                <span class="anomaly-total-label">
+                    TOTAL
+                </span>
+
+                <strong
+                    id="anomalyTotal"
+                    class="anomaly-total"
+                >
+                    —
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!--
+            IMPORTANT:
+            Fixed-height wrapper keeps this entire section compact.
+            Only the anomaly rows scroll.
+        -->
+
+        <div class="anomaly-table-wrapper">
+
+            <table class="anomaly-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            TIME
+                        </th>
+
+                        <th>
+                            IF
+                        </th>
+
+                        <th>
+                            AE
+                        </th>
+
+                        <th>
+                            FUSION
+                        </th>
+
+                        <th>
+                            THRESHOLD
+                        </th>
+
+                        <th>
+                            STATUS
+                        </th>
+
+                        <th>
+                            FEATURES
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="anomalyTableBody">
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            class="empty-table-cell"
+                        >
+                            Loading anomalies...
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div class="anomaly-footer">
+
+            <span>
+                Showing latest detections first
+            </span>
+
+            <span>
+                Scroll for older anomalies
+            </span>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="dashboard-footer">
+
+        <span>
+            Real-Time Network Intrusion Detection
+        </span>
+
+        <span>
+            Stateful Stream Processing · Self-Correcting MLOps
+        </span>
+
+    </footer>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script
+    src="{{ url_for('static', filename='dashboard.js') }}"
+    defer
+></script>
+
+
+</body>
+
+</html>
